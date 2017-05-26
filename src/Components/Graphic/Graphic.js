@@ -102,7 +102,8 @@ export default class Base extends Component {
 
       if (businessEvent) {
         return (
-          <circle className={s.marker} tabIndex={0} onClick={this.showDescription.bind(this, descriptionData)} r="15" cx={x} cy={y} />
+          <circle className={s.marker} tabIndex={0} onClick={this.showDescription.bind(this, descriptionData)} r="15"
+                  cx={x} cy={y} />
         )
       } else {
         return (
@@ -114,7 +115,6 @@ export default class Base extends Component {
 
   showDescription(data) {
     const nData = (data.content === this.state.showDescription.content) ? false : data;
-    console.log(data, this.state.showDescription);
     this.setState({ showDescription: nData });
   }
 
@@ -132,16 +132,40 @@ export default class Base extends Component {
     );
   }
 
+  getShape() {
+    const { data } = this.state;
+    let path = '';
+    for (let i = 0; i < data.length; i++) {
+      const event = data[i];
+      const { date, percentage_district } = event;
+      const x = this.getTimePostion(date);
+      const y = this.getPercentagePosition(percentage_district);
+      if (x > 0)
+        path += `${x},${y} `;
+    }
+    const districtPath = path + `${vWidth - padding * 2},0 ${padding},0`;
+    const businessPath = path + `${vWidth - padding * 2},${vHeight} ${padding},${vHeight}`;
+
+    return (
+      <g>
+        <polygon points={districtPath} fill="#f6b217" />
+        <polygon points={businessPath} fill="#cd2843" />
+      </g>
+    )
+  }
+
   render(props, state) {
     const { width, height, showDescription } = state;
     const percentageBar = this.getPercentageBar();
     const timeline = this.getTimeline();
+    const shape = this.getShape();
     const markers = this.getMarkers();
     const description = (showDescription) ? this.getDescription() : false;
 
     return (
       <div className={s.container}>
         <svg width={width} height={height} viewBox={`0 0 ${vWidth} ${vHeight}`} className={s.container}>
+          {shape}
           {percentageBar}
           {timeline}
           {markers}
