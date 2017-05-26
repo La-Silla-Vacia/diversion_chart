@@ -5,5 +5,16 @@
 
 .marker {
   cursor: pointer;
+  stroke-width: 1;
 
+  &__active {
+    fill: #fff;
+    stroke: #000;
+  }
+}
+
+.line {
+  stroke: #000;
+  stroke-width: 2;
+  pointer-events: none;
 }

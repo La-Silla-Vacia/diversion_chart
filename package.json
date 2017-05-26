@@ -7,6 +7,7 @@
     "url": "git://github.com/la-silla-vacia/triple_a_inassa_y_su_sombra.git"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "lsv-components": "latest",
     "lsv-interactive": "latest",
     "markdown-it": "^8.3.1",
