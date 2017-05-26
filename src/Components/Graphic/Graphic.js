@@ -102,7 +102,7 @@ export default class Base extends Component {
 
       if (businessEvent) {
         return (
-          <circle onClick={this.showDescription.bind(this, descriptionData)} r="15" cx={x} cy={y} />
+          <circle className={s.marker} tabIndex={0} onClick={this.showDescription.bind(this, descriptionData)} r="15" cx={x} cy={y} />
         )
       } else {
         return (
@@ -113,17 +113,22 @@ export default class Base extends Component {
   }
 
   showDescription(data) {
-    this.setState({ showDescription: data });
+    const nData = (data.content === this.state.showDescription.content) ? false : data;
+    console.log(data, this.state.showDescription);
+    this.setState({ showDescription: nData });
   }
 
   getDescription() {
+    const { width } = this.state;
     const data = this.state.showDescription;
     const style = {
       top: `${data.y * 100 / vHeight}%`,
-      left: `${data.x}%`
+      left: `${data.x * 100 / vWidth}%`,
+      containerWidth: width
     };
+
     return (
-      <Description style={style} {...data} />
+      <Description pos={style} {...data} />
     );
   }
 

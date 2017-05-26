@@ -6,4 +6,19 @@
   color: #fff;
   border-radius: 0.3em;
   padding: 0.5em 1em;
+  width: 17.5em;
+  transition: .2s;
+  pointer-events: none;
+}
+
+.content {
+  & h3 {
+    font-size: 1em;
+    color: #fff;
+    margin: 0.5em 0;
+  }
+
+  & p {
+    font-size: 1em !important;;
+  }
 }
