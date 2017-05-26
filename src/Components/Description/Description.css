@@ -3,7 +3,6 @@
   top: 1em;
   right: 1em;
   width: 27.5em;
-  transition: .2s;
   pointer-events: none;
 }
 
@@ -41,7 +40,17 @@
     top: inherit;
     right: inherit;
     width: 100%;
+    pointer-events: all;
+    margin-top: 1em;
   }
 
+  .content {
+    background: transparent;
+    color: #000;
+    padding: 0;
 
+    & h3 {
+      color: #000;
+    }
+  }
 }

@@ -9,20 +9,20 @@ const md = new MarkdownIt();
 import s from './Description.css';
 export default class Description extends Component {
   render(props, state) {
-    const { content } = props;
+    const { content, date } = props;
     const { businessEvent, shadowEvent } = content;
     const formattedShadowContent = md.render(String(shadowEvent));
     const formattedBusinessContent = md.render(String(businessEvent));
     const business = (businessEvent) ? (
       <div>
-        <h2 className={s.title}>Los hitos de la Triple A</h2>
+        <h2 className={s.title}>Los hitos de la Triple A <span>- {moment(date).format('YYYY')}</span></h2>
         <div className={s.content} dangerouslySetInnerHTML={{ __html: formattedBusinessContent }} />
       </div>
     ) : false;
 
     const shadow = (shadowEvent) ? (
       <div>
-        <h2 className={s.title}>Lo que se movía tras bambalinas (o nadie dice)</h2>
+        <h2 className={s.title}>Lo que se movía tras bambalinas (o nadie dice) <span>- {moment(date).format('YYYY')}</span></h2>
         <div className={s.content} dangerouslySetInnerHTML={{ __html: formattedShadowContent }} />
       </div>
     ) : false;

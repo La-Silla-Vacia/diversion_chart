@@ -15,16 +15,17 @@
   display: inline-block;
   background: red;
   margin-right: 0.85em;
-  border: 1px solid #000;
 }
 
 .circle {
   border-radius: 50%;
   background-color: #dad105;
+  border: 1px solid #000;
 }
 
 .square {
   background-color: #cf2a24;
+  border: 1px solid #000;
 }
 
 .light {

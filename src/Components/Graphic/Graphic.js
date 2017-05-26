@@ -152,7 +152,6 @@ export default class Base extends Component {
 
   getDescription() {
     const data = this.state.showDescription;
-
     return (
       <Description {...data} />
     );
@@ -224,7 +223,7 @@ export default class Base extends Component {
 
     return (
       <div className={s.container}>
-        <svg width={width} height={height} onMouseMove={this.handleMouseMove} viewBox={`0 0 ${vWidth} ${vHeight}`}
+        <svg width={width} height={height} onTouchMove={this.handleMouseMove} onMouseMove={this.handleMouseMove} viewBox={`0 0 ${vWidth} ${vHeight}`}
              className={s.container}>
           {shape}
           {percentageBar}
