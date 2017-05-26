@@ -37,4 +37,8 @@
 .time {
   font-size: 26px;
   fill: #fff;
+
+  @media only screen and (max-width: 680px) {
+    font-size: 35px;
+  }
 }

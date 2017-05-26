@@ -57,7 +57,7 @@ export default class Base extends Component {
       };
     });
 
-    this.setState({ positions });
+    this.setState({ positions, showDescription: positions[0] });
   }
 
   setSizes(width) {
@@ -69,9 +69,8 @@ export default class Base extends Component {
       markerSize = width / 30;
     }
     if (width < 450) {
-
+      markerSize = width / 15;
     }
-    console.log(width);
     const height = width / 16 * 9;
     this.setState({ width, height, markerSize });
   }
@@ -176,8 +175,8 @@ export default class Base extends Component {
 
     return (
       <g>
-        <polygon points={districtPath} fill="#09375c" />
         <polygon points={businessPath} fill="#4adce7" />
+        <polygon points={districtPath} fill="#09375c" />
       </g>
     )
   }
