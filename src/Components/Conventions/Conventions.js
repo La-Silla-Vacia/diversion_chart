@@ -8,19 +8,19 @@ export default class Description extends Component {
       <ul className={s.container}>
         <li>
           <div className={cn(s.shape, s.circle)} />
-          los hitos de la triple A
+          Los hitos de la triple A
         </li>
         <li>
           <div className={cn(s.shape, s.square)} />
-          Cuadrado: Lo que se movía tras bambalinas
+          Lo que se movía tras bambalinas
         </li>
         <li>
           <div className={cn(s.shape, s.light)} />
-          Color amarillo: participación de los privados
+          Participación de los privados
         </li>
         <li>
           <div className={cn(s.shape, s.dark)} />
-          Color naranja: participación del Distrito
+          Participación del Distrito
         </li>
       </ul>
     )
