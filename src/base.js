@@ -1,6 +1,7 @@
 import { h, render, Component } from 'preact';
 
 import s from './base.css';
+import Graphic from "./Components/Graphic";
 const data = require('../data/data.json');
 
 export default class Base extends Component {
@@ -9,12 +10,25 @@ export default class Base extends Component {
     super();
 
     this.state = {
-      data: []
-    }
+      data: [],
+      width: 320
+    };
+
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentWillMount() {
     this.setData();
+  }
+
+  componentDidMount() {
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    const { width } = this.props;
+    this.setState({width: width()});
   }
 
   setData() {
@@ -31,7 +45,7 @@ export default class Base extends Component {
     }
 
     if (!dataExists) {
-      this.setState({data: data});
+      this.setState({ data: data });
     } else {
       if (interactiveData.dataUri) {
         dataUri = interactiveData.dataUri;
@@ -44,7 +58,7 @@ export default class Base extends Component {
     fetch(uri)
       .then((response) => {
         return response.json()
-    }).then((json) => {
+      }).then((json) => {
       this.formatData(json);
     }).catch((ex) => {
       console.log('parsing failed', ex)
@@ -53,9 +67,10 @@ export default class Base extends Component {
 
   formatData(data) {
     const items = data.map((rawItem, index) => {
-      const {año, percentage_Distrito, percentage_Total, eventoDeLaEmpresa, eventoDeLaSombra} = rawItem;
+      const { año, percentage_Distrito, percentage_Total, eventoDeLaEmpresa, eventoDeLaSombra } = rawItem;
       if (!año) return null;
       return {
+        id: index + 1,
         date: año,
         percentage_district: percentage_Distrito,
         percentage_total: percentage_Total,
@@ -63,14 +78,18 @@ export default class Base extends Component {
         shadowEvent: eventoDeLaSombra
       };
     });
-    const newData = items.filter(function(n){ return n != undefined });
+    const newData = items.filter(function (n) {
+      return n != undefined
+    });
     this.setState({ data: newData });
   }
 
   render(props, state) {
-    return(
+    const { data, width } = state;
+    return (
       <div className={s.container}>
         Hello triple_a_inassa_y_su_sombra!
+        <Graphic width={width} data={data} />
       </div>
     )
   }

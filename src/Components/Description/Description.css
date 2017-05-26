@@ -1,0 +1,9 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .85);
+  color: #fff;
+  border-radius: 0.3em;
+  padding: 0.5em 1em;
+}

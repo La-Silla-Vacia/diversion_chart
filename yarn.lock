@@ -3517,7 +3517,7 @@ gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.7, gulp-util@^3.0.8:
     through2 "^2.0.0"
     vinyl "^0.5.0"
 
-"gulp@github:gulpjs/gulp#4.0":
+gulp@gulpjs/gulp#4.0:
   version "4.0.0-alpha.2"
   resolved "https://codeload.github.com/gulpjs/gulp/tar.gz/38246c3f8b6dbb8d4ef657183e92d90c8299e22f"
   dependencies:
@@ -4742,7 +4742,7 @@ markdown-it-footnote@latest:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it-footnote/-/markdown-it-footnote-3.0.1.tgz#7f3730747cacc86e2fe0bf8a17a710f34791517a"
 
-markdown-it@latest:
+markdown-it@^8.3.1, markdown-it@latest:
   version "8.3.1"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-8.3.1.tgz#2f4b622948ccdc193d66f3ca2d43125ac4ac7323"
   dependencies:
@@ -4918,7 +4918,7 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@>=0.5.0, mkdirp@^0.5.0, mkdirp@^0.5.1, mk
   dependencies:
     minimist "0.0.8"
 
-moment@^2.8.4:
+moment@^2.18.1, moment@^2.8.4:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
