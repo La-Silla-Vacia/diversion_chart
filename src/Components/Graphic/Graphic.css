@@ -3,13 +3,24 @@
   position: relative;
 }
 
+.circle {
+  fill: #dad105;
+}
+
+.square {
+  fill: #cf2a24;
+}
+
 .marker {
   cursor: pointer;
   stroke-width: 1;
+  transition: .2s;
+  stroke: #000;
 
   &__active {
     fill: #fff;
-    stroke: #000;
+    transform: scale(1.25);
+    transform-origin: center;
   }
 }
 
@@ -25,4 +36,5 @@
 
 .time {
   font-size: 26px;
+  fill: #fff;
 }

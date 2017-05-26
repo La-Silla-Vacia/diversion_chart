@@ -27,7 +27,8 @@ export default class Base extends Component {
       duration: 160,
       showDescription: false,
       lineX: 40,
-      positions: []
+      positions: [],
+      markerSize: 15
     };
 
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -52,7 +53,7 @@ export default class Base extends Component {
       const y = this.getPercentagePosition(percentage_district);
       const shadow = !!(shadowEvent);
       return {
-        id, x, y, date, shadow, active: false, content: (businessEvent) ? businessEvent : shadowEvent
+        id, x, y, date, shadow, active: false, content: { businessEvent, shadowEvent }
       };
     });
 
@@ -60,8 +61,19 @@ export default class Base extends Component {
   }
 
   setSizes(width) {
+    let markerSize = width / 70;
+    if (width < 850) {
+      markerSize = width / 50;
+    }
+    if (width < 650) {
+      markerSize = width / 30;
+    }
+    if (width < 450) {
+
+    }
+    console.log(width);
     const height = width / 16 * 9;
-    this.setState({ width, height });
+    this.setState({ width, height, markerSize });
   }
 
   getPercentageBar() {
@@ -82,7 +94,7 @@ export default class Base extends Component {
   }
 
   getTimeline() {
-    const { data } = this.state;
+    const { data, markerSize } = this.state;
     const dateCount = data.length;
     if (!dateCount) return;
     const dates = [];
@@ -91,8 +103,8 @@ export default class Base extends Component {
       const dateText = moment(date).format('YYYY');
       if (dates.indexOf(dateText) !== -1) return;
       dates.push(dateText);
-      let x = this.getTimePostion(date) - 30;
-      if (id === 1) x += 15;
+      let x = this.getTimePostion(date) - (markerSize * 2);
+      if (id === 1) x += markerSize;
       if (id === dateCount) x -= 10;
 
       return (
@@ -115,21 +127,21 @@ export default class Base extends Component {
   }
 
   getMarkers() {
-    const { positions } = this.state;
+    const { positions, markerSize } = this.state;
     return positions.map((event) => {
       const { id, x, y, content, shadow, active } = event;
 
       if (shadow) {
         return (
-          <rect key={id} className={cn(s.marker, { [s.marker__active]: active })}
+          <rect key={id} className={cn(s.marker, s.square, { [s.marker__active]: active })}
                 onClick={this.showDescription.bind(this, content)}
-                width={30} height={30} x={x - 15} y={y - 15} />
+                width={markerSize * 2} height={markerSize * 2} x={x - markerSize} y={y - markerSize} />
         )
       } else {
         return (
-          <circle key={id} className={cn(s.marker, { [s.marker__active]: active })}
+          <circle key={id} className={cn(s.marker, s.circle, { [s.marker__active]: active })}
                   onClick={this.showDescription.bind(this, content)}
-                  r="15" cx={x} cy={y} />
+                  r={markerSize} cx={x} cy={y} />
         )
       }
     });
@@ -164,25 +176,25 @@ export default class Base extends Component {
 
     return (
       <g>
-        <polygon points={districtPath} fill="#f6b217" />
-        <polygon points={businessPath} fill="#f08800" />
+        <polygon points={districtPath} fill="#09375c" />
+        <polygon points={businessPath} fill="#4adce7" />
       </g>
     )
   }
 
   handleMouseMove(e) {
-    const { width, positions } = this.state;
+    const { width, positions, markerSize } = this.state;
     const layerX = e.layerX;
     const xPercentage = layerX * 100 / width;
     const canvasX = xPercentage * vWidth / 100;
 
     if (canvasX < padding) return;
 
-    let closest;
+    let closest = positions[0];
     const nPositions = [];
     for (let i = 0; i < positions.length; i++) {
       positions[i].active = false;
-      if ((positions[i].x - 15) < canvasX) {
+      if ((positions[i].x - markerSize) < canvasX) {
         closest = positions[i];
       }
       nPositions.push(positions[i]);

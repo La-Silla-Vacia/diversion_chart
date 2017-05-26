@@ -8,48 +8,29 @@ const md = new MarkdownIt();
 
 import s from './Description.css';
 export default class Description extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      left: '-50%',
-      top: '0%'
-    }
-  }
-
-  // componentWillReceiveProps(newProps) {
-  //   this.setState({left: '-50%'});
-  // //   setTimeout(() => {
-  // //     this.handlePosition(newProps);
-  // //   }, 100);
-  // // }
-  //
-  // componentDidMount() {
-  //   this.handlePosition(this.props);
-  // }
-  // //
-  // // handlePosition(props) {
-  //   const { pos } = props;
-  //   const bbox = this.el.getBoundingClientRect();
-  //   if (bbox.left < 0) {
-  //     this.setState({ left: '0%' });
-  //   } else if (bbox.right > pos.containerWidth) {
-  //     this.setState({ left: '-100%' });
-  //   }
-  // }
-
   render(props, state) {
-    const { content, pos } = props;
-    const { left, top } = state;
-    const formattedContent = md.render(String(content));
-    // const style = {
-    //   left: pos.left,
-    //   top: pos.top,
-    //   transform: `translate(${left}, ${top})`
-    // };
+    const { content } = props;
+    const { businessEvent, shadowEvent } = content;
+    const formattedShadowContent = md.render(String(shadowEvent));
+    const formattedBusinessContent = md.render(String(businessEvent));
+    const business = (businessEvent) ? (
+      <div>
+        <h2 className={s.title}>Los hitos de la Triple A</h2>
+        <div className={s.content} dangerouslySetInnerHTML={{ __html: formattedBusinessContent }} />
+      </div>
+    ) : false;
+
+    const shadow = (shadowEvent) ? (
+      <div>
+        <h2 className={s.title}>Lo que se movía tras bambalinas (o nadie dice)</h2>
+        <div className={s.content} dangerouslySetInnerHTML={{ __html: formattedShadowContent }} />
+      </div>
+    ) : false;
+
     return (
-      <div ref={(el) => this.el = el} className={s.container}>
-        <div className={s.content} dangerouslySetInnerHTML={{ __html: formattedContent }} />
+      <div className={s.container}>
+        {business}
+        {shadow}
       </div>
     )
   }

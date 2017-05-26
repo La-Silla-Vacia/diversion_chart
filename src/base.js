@@ -2,6 +2,7 @@ import { h, render, Component } from 'preact';
 
 import s from './base.css';
 import Graphic from "./Components/Graphic";
+import Conventions from './Components/Conventions';
 const data = require('../data/data.json');
 
 export default class Base extends Component {
@@ -67,15 +68,15 @@ export default class Base extends Component {
 
   formatData(data) {
     const items = data.map((rawItem, index) => {
-      const { año, percentage_Distrito, percentage_Total, eventoDeLaEmpresa, eventoDeLaSombra } = rawItem;
+      const { año, percentage_Distrito, percentage_Total, losHitosDeLaTripleA, loQueSeMoviaTrasBambalinasONadieDice } = rawItem;
       if (!año) return null;
       return {
         id: index + 1,
         date: año,
         percentage_district: percentage_Distrito,
         percentage_total: percentage_Total,
-        businessEvent: eventoDeLaEmpresa,
-        shadowEvent: eventoDeLaSombra
+        businessEvent: losHitosDeLaTripleA,
+        shadowEvent: loQueSeMoviaTrasBambalinasONadieDice
       };
     });
     const newData = items.filter(function (n) {
@@ -88,6 +89,7 @@ export default class Base extends Component {
     const { data, width } = state;
     return (
       <div className={s.container}>
+        <Conventions />
         <Graphic width={width} data={data} />
       </div>
     )

@@ -1,0 +1,36 @@
+.container {
+  width: 100%;
+  max-width: 50em;
+  list-style: none;
+  padding: 0;
+  font-size: .85em;
+  @media only screen and (min-width: 50em) {
+    column-count: 2;
+  }
+}
+
+.shape {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  background: red;
+  margin-right: 0.85em;
+  border: 1px solid #000;
+}
+
+.circle {
+  border-radius: 50%;
+  background-color: #dad105;
+}
+
+.square {
+  background-color: #cf2a24;
+}
+
+.light {
+  background-color: #4adce7;
+}
+
+.dark {
+  background-color: #09375c;
+}

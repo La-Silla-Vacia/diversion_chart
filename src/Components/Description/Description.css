@@ -2,16 +2,26 @@
   position: absolute;
   top: 1em;
   right: 1em;
-  background: rgba(0, 0, 0, .85);
-  color: #fff;
-  border-radius: 0.3em;
-  padding: 0.5em 1em;
   width: 25em;
   transition: .2s;
   pointer-events: none;
 }
 
+.title {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin: 0 0 0.15em;
+  color: rgba(0, 0, 0, .85);
+}
+
 .content {
+  background: rgba(0, 0, 0, .85);
+  color: #fff;
+  border-radius: 0.3em;
+  padding: 0.5em 1em;
+  margin-bottom: 0.5em;
+
   & h3 {
     font-size: 1em;
     color: #fff;
@@ -20,5 +30,11 @@
 
   & p {
     font-size: 1em !important;;
+  }
+}
+
+@media only screen and (max-width: 660px) {
+  .container {
+    position: relative;
   }
 }
