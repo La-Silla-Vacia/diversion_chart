@@ -50,9 +50,9 @@ export default class Base extends Component {
       const { date, id, percentage_district, businessEvent, shadowEvent } = event;
       const x = this.getTimePostion(date);
       const y = this.getPercentagePosition(percentage_district);
-      const shadow = (shadowEvent) ? true : false;
+      const shadow = !!(shadowEvent);
       return {
-        id, x, y, shadow, active: false, content: (businessEvent) ? businessEvent : shadowEvent
+        id, x, y, date, shadow, active: false, content: (businessEvent) ? businessEvent : shadowEvent
       };
     });
 
@@ -75,7 +75,7 @@ export default class Base extends Component {
       if (i % 5) return;
       return (
         <g x={0} transform={`translate(0, ${height * (numbers.length - number)})`}>
-          <text>{number}%</text>
+          <text className={s.percentage}>{number}%</text>
         </g>
       )
     });
@@ -83,17 +83,21 @@ export default class Base extends Component {
 
   getTimeline() {
     const { data } = this.state;
-    if (!data.length) return;
+    const dateCount = data.length;
+    if (!dateCount) return;
     const dates = [];
     return data.map((event) => {
-      const { date } = event;
+      const { date, id } = event;
       const dateText = moment(date).format('YYYY');
       if (dates.indexOf(dateText) !== -1) return;
       dates.push(dateText);
-      const x = this.getTimePostion(date);
+      let x = this.getTimePostion(date) - 30;
+      if (id === 1) x += 15;
+      if (id === dateCount) x -= 10;
+
       return (
-        <g transform={`translate(${x}, ${vHeight})`}>
-          <text>{dateText}</text>
+        <g transform={`translate(${x}, ${vHeight - 10})`}>
+          <text className={s.time}>{dateText}</text>
         </g>
       );
     });
@@ -103,7 +107,7 @@ export default class Base extends Component {
     const { start, duration } = this.state;
     const time = moment(date).unix() - start;
     const percentage = time * 100 / duration;
-    return padding + (percentage * (vWidth - padding * 2) / 100);
+    return padding * 1.5 + (percentage * (vWidth - padding * 2) / 100);
   }
 
   getPercentagePosition(percentage) {
@@ -123,7 +127,7 @@ export default class Base extends Component {
         )
       } else {
         return (
-          <circle key={id} className={cn(s.marker, { [s.marker__active]: active })} tabIndex={0}
+          <circle key={id} className={cn(s.marker, { [s.marker__active]: active })}
                   onClick={this.showDescription.bind(this, content)}
                   r="15" cx={x} cy={y} />
         )
@@ -144,19 +148,19 @@ export default class Base extends Component {
   }
 
   getShape() {
-    const { data } = this.state;
+    const { positions } = this.state;
+    if (!positions.length) return;
     let path = '';
     let lY = 225;
-    for (let i = 0; i < data.length; i++) {
-      const event = data[i];
-      const { date, percentage_district } = event;
-      const x = this.getTimePostion(date);
-      const y = lY = this.getPercentagePosition(percentage_district);
+    for (let i = 0; i < positions.length; i++) {
+      const event = positions[i];
+      const { x, y } = event;
+      lY = y;
       if (x > 0)
         path += `${x},${y} `;
     }
-    const businessPath = path + `${vWidth},${lY} ${vWidth},0 ${padding},0`;
-    const districtPath = path + `${vWidth},${lY} ${vWidth},${vHeight} ${padding},${vHeight}`;
+    const businessPath = path + `${vWidth},${lY} ${vWidth},0 ${padding},0 ${padding},${positions[0].y}`;
+    const districtPath = path + `${vWidth},${lY} ${vWidth},${vHeight} ${padding},${vHeight} ${padding},${positions[0].y}`;
 
     return (
       <g>

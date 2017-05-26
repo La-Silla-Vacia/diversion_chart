@@ -28,7 +28,7 @@ export default class Base extends Component {
 
   handleResize() {
     const { width } = this.props;
-    this.setState({width: width()});
+    this.setState({ width: width() });
   }
 
   setData() {
@@ -88,7 +88,6 @@ export default class Base extends Component {
     const { data, width } = state;
     return (
       <div className={s.container}>
-        Hello triple_a_inassa_y_su_sombra!
         <Graphic width={width} data={data} />
       </div>
     )
