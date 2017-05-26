@@ -36,9 +36,9 @@ export default class Base extends Component {
     let interactiveData;
     let dataUri;
     try {
-      if (triple_a_inassa_y_su_sombra_data) {
+      if (diversion_chart_data) {
         dataExists = true;
-        interactiveData = triple_a_inassa_y_su_sombra_data;
+        interactiveData = diversion_chart_data;
       }
     } catch (e) {
       dataExists = false;

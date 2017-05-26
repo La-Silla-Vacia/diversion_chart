@@ -1,10 +1,10 @@
 {
-  "name": "triple_a_inassa_y_su_sombra",
+  "name": "diversion_chart",
   "version": "0.0.0",
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/la-silla-vacia/triple_a_inassa_y_su_sombra.git"
+    "url": "git://github.com/la-silla-vacia/diversion_chart.git"
   },
   "dependencies": {
     "classnames": "^2.2.5",

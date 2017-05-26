@@ -1,10 +1,10 @@
-Source files for triple_a_inassa_y_su_sombra
+Source files for diversion_chart
 =====
 
 ## Description
 
 Please provide a short description of this project
-![](https://raw.githubusercontent.com/la-silla-vacia/triple_a_inassa_y_su_sombra/master/screenshot.png)
+![](https://raw.githubusercontent.com/la-silla-vacia/diversion_chart/master/screenshot.png)
 
 ## Data
 Please link to any external data used, as well as scripts for cleaning and analyzing that data, all of which should live in the `/data` directory.
@@ -34,13 +34,13 @@ To embed on a webpage use this code:
 ```html
 <!-- START OF OUR INTERACTIVE -->
 <script type="text/javascript">
-window.triple_a_inassa_y_su_sombra_data = {
-  "dataUri": "https://lsv-data-visualizations.firebaseio.com/fast-track.json"
+window.diversion_chart_data = {
+  "dataUri": "https://lsv-data-visualizations.firebaseio.com/triple-a-inassa-y-su-sombra.json"
 }
 </script>
-<div class="lsv-interactive" id="triple_a_inassa_y_su_sombra">
-<img src="https://la-silla-vacia.github.io/triple_a_inassa_y_su_sombra/screenshot.png" class="screenshot" style="width:100%;">
+<div class="lsv-interactive" id="diversion_chart">
+<img src="https://la-silla-vacia.github.io/diversion_chart/screenshot.png" class="screenshot" style="width:100%;">
 </div>
-<script defer type="text/javascript" src="https://la-silla-vacia.github.io/triple_a_inassa_y_su_sombra/script.js"></script>
+<script defer type="text/javascript" src="https://la-silla-vacia.github.io/diversion_chart/script.js"></script>
 <!-- END OF OUR INTERACTIE -->
 ```

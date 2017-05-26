@@ -7,11 +7,11 @@ import Base from './src/base';
 require("./src/base.css"); // this goes outside the callback since otherwise the interactive sometimes fires before the CSS is fully loaded
 require("./src/global.css");
 
-lsv("triple_a_inassa_y_su_sombra", function (interactive) {
+lsv("diversion_chart", function (interactive) {
   "use strict";
 
   if (!interactive) {
-    console.log("Interactive triple_a_inassa_y_su_sombra not initiated. Exiting.");
+    console.log("Interactive diversion_chart not initiated. Exiting.");
     return;
   }
 
