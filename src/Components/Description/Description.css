@@ -2,8 +2,8 @@
   position: absolute;
   top: 1em;
   right: 1em;
-  width: 27.5em;
   pointer-events: none;
+  width: 30em;
 }
 
 .title {

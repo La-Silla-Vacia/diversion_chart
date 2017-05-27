@@ -1,5 +1,6 @@
 /* Hide the sidebar in historias */
-.article-sidebar.col-md-4.col-lg-3 {
+.article-sidebar.col-md-4.col-lg-3,
+.article-main-body > .img-container {
   display: none;
 }
 

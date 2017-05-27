@@ -53,7 +53,9 @@ export default class Base extends Component {
       const y = this.getPercentagePosition(percentage_district);
       const shadow = !!(shadowEvent);
       return {
-        id, x, y, date, shadow, active: false, content: { businessEvent, shadowEvent }
+        id, x, y, date, shadow, active: false,
+        content: { businessEvent, shadowEvent },
+        percentage: percentage_district
       };
     });
 
@@ -127,20 +129,37 @@ export default class Base extends Component {
 
   getMarkers() {
     const { positions, markerSize } = this.state;
+    let hasLine = [];
     return positions.map((event) => {
-      const { id, x, y, content, shadow, active } = event;
+      const { id, x, y, content, shadow, active, percentage } = event;
+
+      const shadowLine = (hasLine.indexOf(percentage) === -1) ? (
+        <line x1="0" x2={vWidth} y1={markerSize} y2={markerSize} strokeWidth={1} stroke="rgba(255,255,255,1)"
+              stroke-dasharray="10, 10" />
+      ) : false;
+      const circleLine = (hasLine.indexOf(percentage) === -1) ? (
+        <line x1="0" x2={vWidth} y1={0} y2={0} strokeWidth={1} stroke="rgba(255,255,255,1)"
+              stroke-dasharray="10, 10" />
+      ) : false;
+      hasLine.push(percentage);
 
       if (shadow) {
         return (
-          <rect key={id} className={cn(s.marker, s.square, { [s.marker__active]: active })}
-                onClick={this.showDescription.bind(this, content)}
-                width={markerSize * 2} height={markerSize * 2} x={x - markerSize} y={y - markerSize} />
+          <g transform={`translate(0, ${y - markerSize})`}>
+            <rect key={id} className={cn(s.marker, s.square, { [s.marker__active]: active })}
+                  onClick={this.showDescription.bind(this, content)}
+                  width={markerSize * 2} height={markerSize * 2} x={x - markerSize} />
+            {shadowLine}
+          </g>
         )
       } else {
         return (
-          <circle key={id} className={cn(s.marker, s.circle, { [s.marker__active]: active })}
-                  onClick={this.showDescription.bind(this, content)}
-                  r={markerSize} cx={x} cy={y} />
+          <g transform={`translate(0, ${y})`}>
+            <circle key={id} cx={x} className={cn(s.marker, s.circle, { [s.marker__active]: active })}
+                    onClick={this.showDescription.bind(this, content)}
+                    r={markerSize} />
+            {circleLine}
+          </g>
         )
       }
     });
@@ -223,7 +242,10 @@ export default class Base extends Component {
 
     return (
       <div className={s.container}>
-        <svg width={width} height={height} onTouchMove={this.handleMouseMove} onMouseMove={this.handleMouseMove} viewBox={`0 0 ${vWidth} ${vHeight}`}
+        <svg width={width} height={height}
+             onTouchMove={this.handleMouseMove}
+             onMouseMove={this.handleMouseMove}
+             viewBox={`0 0 ${vWidth} ${vHeight}`}
              className={s.container}>
           {shape}
           {percentageBar}
