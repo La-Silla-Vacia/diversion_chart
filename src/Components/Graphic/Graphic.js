@@ -1,11 +1,9 @@
 import { h, render, Component } from 'preact';
 import moment from 'moment';
-import MarkdownIt from 'markdown-it';
 import cn from 'classnames';
 
 // Configure plugins
 moment.locale('es');
-const md = new MarkdownIt();
 
 import Description from '../Description';
 
@@ -13,6 +11,7 @@ import s from './Graphic.css';
 const vWidth = 2000;
 const padding = 50;
 const vHeight = 1125;
+
 export default class Base extends Component {
 
   constructor() {
@@ -33,6 +32,7 @@ export default class Base extends Component {
     };
 
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -64,6 +64,11 @@ export default class Base extends Component {
     });
 
     this.setState({ positions, showDescription: positions[0] });
+  }
+
+  componentDidMount() {
+    if (this.root)
+      offsetTop = this.root.getBoundingClientRect().top;
   }
 
   setSizes(width) {
@@ -206,7 +211,6 @@ export default class Base extends Component {
   }
 
   handleMouseMove(e) {
-    // console.log(e, 'abc');
     const { width, positions, markerSize } = this.state;
     const layerX = e.layerX;
     const xPercentage = layerX * 100 / width;
@@ -228,6 +232,11 @@ export default class Base extends Component {
     if (index !== -1)
       nPositions[index].active = true;
     this.setState({ lineX: canvasX, showDescription: closest, positions: nPositions, mousePosition });
+  }
+
+  handleTouchMove(e) {
+    e.preventDefault();
+    this.handleMouseMove(e);
   }
 
   getLine() {
@@ -252,7 +261,7 @@ export default class Base extends Component {
     // console.log(showDescription);
 
     return (
-      <div className={s.container}>
+      <div ref={(el) => this.root = el} className={s.container}>
         <svg width={width} height={height}
              onTouchMove={this.handleTouchMove}
              onMouseMove={this.handleMouseMove}
