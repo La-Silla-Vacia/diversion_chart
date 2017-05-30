@@ -150,19 +150,19 @@ export default class Base extends Component {
       if (shadow) {
         return (
           <g transform={`translate(0, ${y - markerSize})`}>
+            {shadowLine}
             <rect key={id} className={cn(s.marker, s.square, { [s.marker__active]: active })}
                   onClick={this.showDescription.bind(this, content)}
                   width={markerSize * 2} height={markerSize * 2} x={x - markerSize} />
-            {shadowLine}
           </g>
         )
       } else {
         return (
           <g transform={`translate(0, ${y})`}>
+            {circleLine}
             <circle key={id} cx={x} className={cn(s.marker, s.circle, { [s.marker__active]: active })}
                     onClick={this.showDescription.bind(this, content)}
                     r={markerSize} />
-            {circleLine}
           </g>
         )
       }
