@@ -65,7 +65,9 @@ export default class Base extends Component {
       };
     });
 
-    this.setState({ positions, showDescription: positions[0] });
+    const showDescription = (this.props.width < 1023) ? false : positions[0];
+
+    this.setState({ positions, showDescription });
   }
 
   setSizes(width) {
