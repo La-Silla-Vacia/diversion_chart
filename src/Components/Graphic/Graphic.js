@@ -26,7 +26,7 @@ export default class Base extends Component {
       end: 320,
       duration: 160,
       showDescription: false,
-      lineX: 40,
+      lineX: 150,
       positions: [],
       markerSize: 15,
       mousePosition: 'left'
@@ -36,9 +36,12 @@ export default class Base extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.props !== newProps) {
-      this.setData(newProps.data);
+    if (this.props.width !== newProps.width) {
       this.setSizes(newProps.width);
+    }
+
+    if (this.props.data !== newProps.data) {
+      this.setData(newProps.data);
     }
   }
 
@@ -173,6 +176,7 @@ export default class Base extends Component {
   getDescription() {
     const { mousePosition } = this.state;
     const data = this.state.showDescription;
+    // console.log('hi', this.state);
     return (
       <Description position={mousePosition} {...data} />
     );
@@ -202,6 +206,7 @@ export default class Base extends Component {
   }
 
   handleMouseMove(e) {
+    // console.log(e, 'abc');
     const { width, positions, markerSize } = this.state;
     const layerX = e.layerX;
     const xPercentage = layerX * 100 / width;
@@ -243,10 +248,13 @@ export default class Base extends Component {
     const description = (showDescription) ? this.getDescription() : false;
     const line = this.getLine();
 
+
+    // console.log(showDescription);
+
     return (
       <div className={s.container}>
         <svg width={width} height={height}
-          // onTouchMove={this.handleMouseMove}
+             onTouchMove={this.handleTouchMove}
              onMouseMove={this.handleMouseMove}
              viewBox={`0 0 ${vWidth} ${vHeight}`}
              className={s.svg}>
