@@ -66,11 +66,6 @@ export default class Base extends Component {
     this.setState({ positions, showDescription: positions[0] });
   }
 
-  componentDidMount() {
-    if (this.root)
-      offsetTop = this.root.getBoundingClientRect().top;
-  }
-
   setSizes(width) {
     let markerSize = width / 70;
     if (width < 850) {
