@@ -7,6 +7,28 @@ import cn from 'classnames';
 moment.locale('es');
 const md = new MarkdownIt();
 
+
+// Remember old renderer, if overriden, or proxy to default renderer
+const defaultRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
+    return self.renderToken(tokens, idx, options);
+  };
+
+md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+  // If you are sure other plugins can't add `target` - drop check below
+  const aIndex = tokens[idx].attrIndex('target');
+
+  if (aIndex < 0) {
+    tokens[idx].attrPush(['target', '_blank']); // add new attribute
+  } else {
+    tokens[idx].attrs[aIndex][1] = '_blank';    // replace value of existing attr
+  }
+
+  // pass token to default renderer.
+  return defaultRender(tokens, idx, options, env, self);
+};
+
+
+
 import s from './Description.css';
 export default class Description extends Component {
   render(props, state) {
@@ -23,7 +45,7 @@ export default class Description extends Component {
 
     const shadow = (shadowEvent) ? (
       <div className={s.group}>
-        <h2 className={s.title}>Lo que se movía tras bambalinas (o nadie dice) <span>- {moment(date).format('YYYY')}</span></h2>
+        <h2 className={s.title}>La movida del poder detrás <span>- {moment(date).format('YYYY')}</span></h2>
         <div className={s.content} dangerouslySetInnerHTML={{ __html: formattedShadowContent }} />
       </div>
     ) : false;
