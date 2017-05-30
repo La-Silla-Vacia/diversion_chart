@@ -28,11 +28,13 @@ export default class Base extends Component {
       lineX: 150,
       positions: [],
       markerSize: 15,
-      mousePosition: 'left'
+      mousePosition: 'left',
+      locked: false
     };
 
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -205,8 +207,9 @@ export default class Base extends Component {
     )
   }
 
-  handleMouseMove(e) {
-    const { width, positions, markerSize } = this.state;
+  handleMouseMove(e, force) {
+    const { width, positions, markerSize, locked } = this.state;
+    if (locked && !force) return;
     const layerX = e.layerX;
     const xPercentage = layerX * 100 / width;
     const canvasX = xPercentage * vWidth / 100;
@@ -231,7 +234,12 @@ export default class Base extends Component {
 
   handleTouchMove(e) {
     e.preventDefault();
-    this.handleMouseMove(e);
+    this.handleMouseMove(e, true);
+  }
+
+  handleClick(e) {
+    this.handleMouseMove(e, true);
+    this.setState({locked: !this.state.locked});
   }
 
   getLine() {
@@ -260,6 +268,7 @@ export default class Base extends Component {
         <svg width={width} height={height}
              onTouchMove={this.handleTouchMove}
              onMouseMove={this.handleMouseMove}
+             onClick={this.handleClick}
              viewBox={`0 0 ${vWidth} ${vHeight}`}
              className={s.svg}>
           {shape}
