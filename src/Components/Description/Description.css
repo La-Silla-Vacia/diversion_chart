@@ -1,9 +1,16 @@
 .container {
   position: absolute;
   top: 1em;
-  right: 1em;
+  left: calc(100% - 1em);
+  transform: translateX(-100%);
   pointer-events: none;
   width: 30em;
+  transition: .2s;
+}
+
+.left {
+  transform: translateX(0);
+  left: 2.5em;
 }
 
 .title {
@@ -11,7 +18,7 @@
   font-size: 0.8em;
   font-weight: bold;
   margin: 0 0 0.15em;
-  color: rgba(0, 0, 0, .85);
+  color: #fff;
 }
 
 .content {
@@ -39,9 +46,11 @@
     position: relative;
     top: inherit;
     right: inherit;
+    left: inherit;
     width: 100%;
     pointer-events: all;
     margin-top: 1em;
+    transform: translateX(0) !important;
   }
 
   .content {

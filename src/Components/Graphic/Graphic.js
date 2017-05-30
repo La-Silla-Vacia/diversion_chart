@@ -28,7 +28,8 @@ export default class Base extends Component {
       showDescription: false,
       lineX: 40,
       positions: [],
-      markerSize: 15
+      markerSize: 15,
+      mousePosition: 'left'
     };
 
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -170,9 +171,10 @@ export default class Base extends Component {
   }
 
   getDescription() {
+    const { mousePosition } = this.state;
     const data = this.state.showDescription;
     return (
-      <Description {...data} />
+      <Description position={mousePosition} {...data} />
     );
   }
 
@@ -204,8 +206,9 @@ export default class Base extends Component {
     const layerX = e.layerX;
     const xPercentage = layerX * 100 / width;
     const canvasX = xPercentage * vWidth / 100;
-
     if (canvasX < padding) return;
+
+    const mousePosition = (xPercentage < 50) ? 'left' : 'right';
 
     let closest = positions[0];
     const nPositions = [];
@@ -219,7 +222,7 @@ export default class Base extends Component {
     const index = nPositions.indexOf(closest);
     if (index !== -1)
       nPositions[index].active = true;
-    this.setState({ lineX: canvasX, showDescription: closest, positions: nPositions });
+    this.setState({ lineX: canvasX, showDescription: closest, positions: nPositions, mousePosition });
   }
 
   getLine() {
@@ -243,10 +246,10 @@ export default class Base extends Component {
     return (
       <div className={s.container}>
         <svg width={width} height={height}
-             onTouchMove={this.handleMouseMove}
+          // onTouchMove={this.handleMouseMove}
              onMouseMove={this.handleMouseMove}
              viewBox={`0 0 ${vWidth} ${vHeight}`}
-             className={s.container}>
+             className={s.svg}>
           {shape}
           {percentageBar}
           {timeline}

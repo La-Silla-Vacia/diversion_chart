@@ -1,6 +1,7 @@
 import { h, render, Component } from 'preact';
 import moment from 'moment';
 import MarkdownIt from 'markdown-it';
+import cn from 'classnames';
 
 // Configure plugins
 moment.locale('es');
@@ -9,7 +10,7 @@ const md = new MarkdownIt();
 import s from './Description.css';
 export default class Description extends Component {
   render(props, state) {
-    const { content, date } = props;
+    const { content, date, position } = props;
     const { businessEvent, shadowEvent } = content;
     const formattedShadowContent = md.render(String(shadowEvent));
     const formattedBusinessContent = md.render(String(businessEvent));
@@ -28,7 +29,7 @@ export default class Description extends Component {
     ) : false;
 
     return (
-      <div className={s.container}>
+      <div className={cn(s.container, {[s.left]: position === 'right'})}>
         {business}
         {shadow}
       </div>
