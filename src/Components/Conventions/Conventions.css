@@ -4,9 +4,6 @@
   list-style: none;
   padding: 0;
   font-size: .85em;
-  @media only screen and (min-width: 50em) {
-    column-count: 2;
-  }
 }
 
 .shape {

@@ -11,10 +11,6 @@ export default class Description extends Component {
           Los hitos de la triple A
         </li>
         <li>
-          <div className={cn(s.shape, s.square)} />
-          Lo que se movía tras bambalinas
-        </li>
-        <li>
           <div className={cn(s.shape, s.light)} />
           Participación de los privados
         </li>
