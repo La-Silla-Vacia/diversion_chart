@@ -32,7 +32,7 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 import s from './Description.css';
 export default class Description extends Component {
   render(props, state) {
-    const { content, date, position } = props;
+    const { content, date } = props;
     const { businessEvent, shadowEvent } = content;
     const formattedShadowContent = md.render(String(shadowEvent));
     const formattedBusinessContent = md.render(String(businessEvent));
@@ -51,7 +51,7 @@ export default class Description extends Component {
     ) : false;
 
     return (
-      <div className={cn(s.container, {[s.left]: position === 'right'})}>
+      <div className={s.container}>
         {business}
         {shadow}
       </div>

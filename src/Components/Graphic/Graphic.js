@@ -28,7 +28,6 @@ export default class Base extends Component {
       lineX: 150,
       positions: [],
       markerSize: 15,
-      mousePosition: 'left',
       locked: false
     };
 
@@ -53,13 +52,14 @@ export default class Base extends Component {
     const end = moment(data[data.length - 1].date).unix();
     const duration = end - start;
     this.setState({ start, end, duration, data });
-    const positions = data.map((event) => {
+    const positions = data.map((event, index) => {
       const { date, id, percentage_district, businessEvent, shadowEvent } = event;
       const x = this.getTimePostion(date);
       const y = this.getPercentagePosition(percentage_district);
       const shadow = !!(shadowEvent);
+      const active = (index === 0) ? true : false;
       return {
-        id, x, y, date, shadow, active: false,
+        id, x, y, date, shadow, active,
         content: { businessEvent, shadowEvent },
         percentage: percentage_district
       };
@@ -178,11 +178,10 @@ export default class Base extends Component {
   }
 
   getDescription() {
-    const { mousePosition } = this.state;
     const data = this.state.showDescription;
     // console.log('hi', this.state);
     return (
-      <Description position={mousePosition} {...data} />
+      <Description {...data} />
     );
   }
 
@@ -217,8 +216,6 @@ export default class Base extends Component {
     const canvasX = xPercentage * vWidth / 100;
     if (canvasX < padding) return;
 
-    const mousePosition = (xPercentage < 50) ? 'left' : 'right';
-
     let closest = positions[0];
     const nPositions = [];
     for (let i = 0; i < positions.length; i++) {
@@ -231,7 +228,7 @@ export default class Base extends Component {
     const index = nPositions.indexOf(closest);
     if (index !== -1)
       nPositions[index].active = true;
-    this.setState({ lineX: canvasX, showDescription: closest, positions: nPositions, mousePosition });
+    this.setState({ lineX: canvasX, showDescription: closest, positions: nPositions });
   }
 
   handleTouchMove(e) {
@@ -260,16 +257,11 @@ export default class Base extends Component {
     const shape = this.getShape();
     const markers = this.getMarkers();
     const description = (showDescription) ? this.getDescription() : false;
-    const line = this.getLine();
-
-
-    // console.log(showDescription);
 
     return (
-      <div ref={(el) => this.root = el} className={s.container}>
+      <div className={s.container}>
         <svg width={width} height={height}
              onTouchMove={this.handleTouchMove}
-             onMouseMove={this.handleMouseMove}
              onClick={this.handleClick}
              viewBox={`0 0 ${vWidth} ${vHeight}`}
              className={s.svg}>
@@ -277,7 +269,6 @@ export default class Base extends Component {
           {percentageBar}
           {timeline}
           {markers}
-          {line}
         </svg>
         {description}
       </div>

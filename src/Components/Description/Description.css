@@ -5,7 +5,7 @@
   transform: translateX(-100%);
   //pointer-events: none;
   width: 30em;
-  max-width: 43%;
+  max-width: 50%;
   transition: .2s;
 }
 
@@ -55,8 +55,10 @@
     max-width: inherit;
     width: 100%;
     pointer-events: all;
-    margin-top: 1em;
     transform: translateX(0) !important;
+    background-color: #e2f5ff;
+    padding: 1em;
+    margin-top: -6px;
   }
 
   .content {
