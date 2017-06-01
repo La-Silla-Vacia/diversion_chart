@@ -56,17 +56,14 @@ export default class Base extends Component {
       const { date, id, percentage_district, businessEvent } = event;
       const x = this.getTimePostion(date);
       const y = this.getPercentagePosition(percentage_district);
-      const active = (index === 0) ? true : false;
       return {
-        id, x, y, date, active,
+        id, x, y, date, active: false,
         content: { businessEvent },
         percentage: percentage_district
       };
     });
 
-    const showDescription = (this.props.width < 1023) ? false : positions[0];
-
-    this.setState({ positions, showDescription });
+    this.setState({ positions });
   }
 
   setSizes(width) {
