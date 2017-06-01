@@ -22,6 +22,10 @@
   transition: .2s;
   stroke: #000;
 
+  &:hover {
+    fill: #fff;
+  }
+
   &__active {
     fill: #fff;
     transform: scale(1.25);

@@ -68,7 +68,7 @@ export default class Base extends Component {
 
   formatData(data) {
     const items = data.map((rawItem, index) => {
-      const { año, percentage_Distrito, percentage_Total, losHitosDeLaTripleA, laMovidaDelPoderDetras } = rawItem;
+      const { año, percentage_Distrito, percentage_Total, losHitosDeLaTripleA } = rawItem;
       if (!año) return null;
       return {
         id: index + 1,
@@ -76,7 +76,6 @@ export default class Base extends Component {
         percentage_district: percentage_Distrito,
         percentage_total: percentage_Total,
         businessEvent: losHitosDeLaTripleA,
-        shadowEvent: laMovidaDelPoderDetras
       };
     });
     const newData = items.filter(function (n) {

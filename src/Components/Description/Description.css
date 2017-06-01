@@ -57,8 +57,9 @@
     pointer-events: all;
     transform: translateX(0) !important;
     background-color: #e2f5ff;
-    padding: 1em;
+    padding: 1em 1em 0.25em;
     margin-top: -6px;
+    margin-bottom: 1em;
   }
 
   .content {

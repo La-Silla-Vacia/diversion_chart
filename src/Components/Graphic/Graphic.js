@@ -53,14 +53,13 @@ export default class Base extends Component {
     const duration = end - start;
     this.setState({ start, end, duration, data });
     const positions = data.map((event, index) => {
-      const { date, id, percentage_district, businessEvent, shadowEvent } = event;
+      const { date, id, percentage_district, businessEvent } = event;
       const x = this.getTimePostion(date);
       const y = this.getPercentagePosition(percentage_district);
-      const shadow = !!(shadowEvent);
       const active = (index === 0) ? true : false;
       return {
-        id, x, y, date, shadow, active,
-        content: { businessEvent, shadowEvent },
+        id, x, y, date, active,
+        content: { businessEvent },
         percentage: percentage_district
       };
     });
@@ -139,37 +138,22 @@ export default class Base extends Component {
     const { positions, markerSize } = this.state;
     let hasLine = [];
     return positions.map((event) => {
-      const { id, x, y, content, shadow, active, percentage } = event;
+      const { id, x, y, content, active, percentage } = event;
 
-      const shadowLine = (hasLine.indexOf(percentage) === -1) ? (
-        <line x1="0" x2={vWidth} y1={markerSize} y2={markerSize} strokeWidth={1} stroke="rgba(255,255,255,1)"
-              stroke-dasharray="10, 10" />
-      ) : false;
       const circleLine = (hasLine.indexOf(percentage) === -1) ? (
         <line x1="0" x2={vWidth} y1={0} y2={0} strokeWidth={1} stroke="rgba(255,255,255,1)"
               stroke-dasharray="10, 10" />
       ) : false;
       hasLine.push(percentage);
 
-      if (shadow) {
-        return (
-          <g transform={`translate(0, ${y - markerSize})`}>
-            {shadowLine}
-            <rect key={id} className={cn(s.marker, s.square, { [s.marker__active]: active })}
+      return (
+        <g transform={`translate(0, ${y})`}>
+          {circleLine}
+          <circle key={id} cx={x} className={cn(s.marker, s.circle, { [s.marker__active]: active })}
                   onClick={this.showDescription.bind(this, content)}
-                  width={markerSize * 2} height={markerSize * 2} x={x - markerSize} />
-          </g>
-        )
-      } else {
-        return (
-          <g transform={`translate(0, ${y})`}>
-            {circleLine}
-            <circle key={id} cx={x} className={cn(s.marker, s.circle, { [s.marker__active]: active })}
-                    onClick={this.showDescription.bind(this, content)}
-                    r={markerSize} />
-          </g>
-        )
-      }
+                  r={markerSize} />
+        </g>
+      )
     });
   }
 
@@ -238,7 +222,7 @@ export default class Base extends Component {
 
   handleClick(e) {
     this.handleMouseMove(e, true);
-    this.setState({locked: !this.state.locked});
+    this.setState({ locked: !this.state.locked });
   }
 
   getLine() {
