@@ -12,7 +12,8 @@ export default class Base extends Component {
 
     this.state = {
       data: [],
-      width: 320
+      width: 320,
+      loading: true
     };
 
     this.handleResize = this.handleResize.bind(this);
@@ -81,11 +82,21 @@ export default class Base extends Component {
     const newData = items.filter(function (n) {
       return n != undefined
     });
-    this.setState({ data: newData });
+    this.setState({ data: newData, loading: false });
   }
 
   render(props, state) {
-    const { data, width } = state;
+    const { data, width, loading } = state;
+
+    if (loading) {
+      return (
+        <div className={s.container}>
+          <img src="https://raw.githubusercontent.com/la-silla-vacia/lsv-interactive/master/misc/lsvi-loading.gif"
+               alt="Interactive is loading" style="width:100%;max-width: 320px;margin: 4em auto;display: block;" />
+        </div>
+      )
+    }
+
     return (
       <div className={s.container}>
         <Conventions />
